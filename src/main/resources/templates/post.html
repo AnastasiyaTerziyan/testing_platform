@@ -1,0 +1,28 @@
+<!DOCTYPE html>
+<html lang="en" xmlns="http://www.w3.org/1999/xhtml" xmlns:th="http://www.thymeleaf.org"
+>
+<head th:include="index::header"></head>
+<body>
+<div class="wrapper">
+    <nav class="navbar navbar-inverse" th:include="index::main-navbar"></nav>
+    <div class="side-menu" th:include="index::main-side-menu"></div>
+    <div class="col-sm-offset-2 center-block">
+        <div class="container white-center heidt heidt2">
+            <div class="row" style="height: 90vh; overflow-y: scroll; margin-left: 5px;">
+                <h1 th:text="'Новость ' + ${news.id}"></h1>
+                <div class="row lala">
+                    <div class="col-sm-12">
+                        <h2 th:text="${news.title}"></h2>
+                        <h3 th:text="'Автор новости: ' + ${news.user.name} + ' ' + ${news.user.lastName}"></h3>
+                        <img th:src="${news.photo}" alt="Новость" class="leftimg okm img-responsive">
+                        <p th:text="${news.description}"></p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="col-md-12 header footer" th:include="index::main-footer"></div>
+</div>
+<div th:include="index::script-libs"></div>
+</body>
+</html>

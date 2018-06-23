@@ -1,0 +1,56 @@
+<!DOCTYPE html>
+<html lang="en" xmlns="http://www.w3.org/1999/xhtml" xmlns:th="http://www.thymeleaf.org">
+<head th:include="index::header"></head>
+<body>
+<div class="wrapper">
+
+    <nav class="navbar navbar-inverse" th:include="index::main-navbar"></nav>
+    <div class="side-menu" th:include="index::main-side-menu"></div>
+    <div class="col-sm-offset-2 center-block">
+        <div class="container white-center scrl">
+            <div class="row height-row">
+                <div class="col-md-12">
+                    <h1>Уважаемый абитуриент!</h1>
+                    <p style="font-style: italic; font-size: medium">Мы стремимся повысить качество образовательных услуг в Казанском (Приволжском) Федеральном университете,
+                        поэтому нам очень важно мнение каждого будущего студента. Просим Вас ответить на вопросы для
+                        абитуриентов. Организаторы гарантируют анонимность и конфиденциальность Ваших ответов.
+                        Для совершенствования деятельности Университета мы крайне заинтересованы в получении объективной
+                        информации. Будем признательны Вам за искренность и самостоятельность при ответе на предложенные вопросы.
+                        Вам будет предложено несколько форм, которые Вы можете заполнить так, как считаете нужным!
+                        Ваше мнение очень важно для нас!
+                        Заранее благодарим Вас за участие и желаем успешного поступления и учебы!</p>
+                    <form th:action="@{/tasks/create/}" method="post">
+                        <br/>
+                        <input type="text" class="form-control" id="testName"
+                               name="testName"
+                               placeholder="Введите вопрос"/>
+                        <br/>
+                        <select class="form-control" id="testCategory" name="testCategory">
+                            <option value="FREE">
+                                Свободный ответ
+                            </option>
+                            <option value="FILE">
+                                Ответ с загрузкой файла
+                            </option>
+                            <option value="VARIANTS">
+                                Выбор одного из вариантов ответа
+                            </option>
+                        </select>
+                        <br/>
+
+                        <h4 style="font-weight: bold; id="oldQuestionsHead">Вывод созданных форм</h4>
+                        <div id="oldTestQuestions"></div>
+                        <h4 style="font-weight: bold; id="questionsHead">Добавление новых вопросов</h4>
+                        <div id="testQuestions"></div>
+
+                        <br/>
+                        <input type="button" value="Добавить вопрос" id="0" class="addQuestion btn btn-default btn-go"/>
+                    </form>
+                </div>
+            </div>
+        </div>
+        <!--<div class="col-md-12 header footer" th:include="index::main-footer"></div>-->
+    </div><!-- wrapper close -->
+    <div th:include="index::script-libs"></div>
+</body>
+</html>

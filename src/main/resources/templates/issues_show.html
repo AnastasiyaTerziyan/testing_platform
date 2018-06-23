@@ -1,0 +1,60 @@
+<!DOCTYPE html>
+<html lang="en" xmlns="http://www.w3.org/1999/xhtml" xmlns:th="http://www.thymeleaf.org"
+      xmlns:sec="http://www.w3.org/1999/xhtml">
+<head th:include="index::header"></head>
+<body>
+<div class="wrapper">
+    <nav class="navbar navbar-inverse" th:include="index::main-navbar"></nav>
+    <div class="side-menu" th:include="index::main-side-menu"></div>
+
+    <div class="col-sm-offset-2 center-block">
+        <div class="container white-center heidt">
+            <div class="row scrl" style="overflow-y: scroll; height: 80vh;">
+                <table class="table_blur" style="margin-bottom: 10px;">
+                    <tr>
+                        <th>Тип заявки</th>
+                        <th>Название заявки</th>
+                        <th>Кто подал (ФИО)</th>
+                        <th>Кто подал (Группа)</th>
+                        <th>Мероприятие окончено?</th>
+                    </tr>
+                    <tr th:each="hack, stat : ${hacks}">
+                        <td>Хакатон</td>
+                        <td th:text="${hack.hack.name}"></td>
+                        <td th:text="${hack.user.name} + ' ' + ${hack.user.lastName} + ' ' + ${hack.user.midName}"></td>
+                        <td th:text="${hack.user.group}"></td>
+                        <td>
+                            <form th:action="@{/action/decan/issue_show/}" method="post">
+                                <div class="form-group">
+                                    <input type="hidden" name="type" value="hack">
+                                    <input type="hidden" name="iss_id" th:value="${hack.id}">
+                                    <button type="submit" class="btn btn-default">Да</button>
+                                </div>
+                            </form>
+                        </td>
+                    </tr>
+                    <tr th:each="intern, stat : ${ints}">
+                        <td>Стажировка</td>
+                        <td th:text="${intern.internship.name}"></td>
+                        <td th:text="${intern.user.name} + ' ' + ${intern.user.lastName} + ' ' + ${intern.user.midName}"></td>
+                        <td th:text="${intern.user.group}"></td>
+                        <td>
+                            <form th:action="@{/action/decan/issue_show/}" method="post">
+                                <div class="form-group">
+                                    <input type="hidden" name="type" value="intern">
+                                    <input type="hidden" name="iss_id" th:value="${intern.id}">
+                                    <button type="submit" class="btn btn-default">Да</button>
+                                </div>
+                            </form>
+                        </td>
+                    </tr>
+                </table>
+            </div>
+        </div>
+    </div>
+
+    <div class="col-md-12 header footer" th:include="index::main-footer"></div>
+</div>
+<div th:include="index::script-libs"></div>
+</body>
+</html>

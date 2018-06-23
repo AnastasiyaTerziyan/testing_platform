@@ -1,0 +1,35 @@
+<!DOCTYPE html>
+<html lang="en" xmlns="http://www.w3.org/1999/xhtml" xmlns:th="http://www.thymeleaf.org"
+      xmlns:sec="http://www.w3.org/1999/xhtml">
+<head th:include="index::header"></head>
+<body>
+<div class="wrapper">
+    <nav class="navbar navbar-inverse" th:include="index::main-navbar"></nav>
+    <div class="side-menu" th:include="index::main-side-menu"></div>
+    <div class="col-sm-offset-2 center-block">
+        <div class="container white-center scrl">
+            <div class="row height-row">
+                <div class="col-md-12"><h1>Опросы</h1></div>
+                <!--/*@thymesVar id="poll" type="ru.itis.terziyan.diplom.entities.Poll"*/-->
+                <div th:each="poll : ${polls}" class="col-md-3 interview">
+                    <div class="row">
+                        <div class="col-md-12">
+                            <h4 th:text="${poll.title}"></h4></div>
+                        <div class="col-md-12"><p th:text="${poll.description}"></p></div>
+                        <div class="col-md-12">
+                            <button type="button" class="btn btn-default btn-go"
+                                    th:onclick="'location.href=\'' + ${poll.link} + '\''">
+                                Пройти
+                            </button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="col-md-12 header footer" th:include="index::main-footer"></div>
+</div>
+<div th:include="index::script-libs"></div>
+</body>
+</html>

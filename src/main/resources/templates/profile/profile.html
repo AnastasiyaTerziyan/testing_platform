@@ -1,0 +1,65 @@
+<!DOCTYPE html>
+<html lang="en" xmlns="http://www.w3.org/1999/xhtml" xmlns:th="http://www.thymeleaf.org"
+      xmlns:sec="http://www.w3.org/1999/xhtml">
+<head th:include="index::header"></head>
+<body>
+<div class="wrapper">
+    <nav class="navbar navbar-inverse" th:include="index::main-navbar"></nav>
+    <div class="side-menu" th:include="index::main-side-menu"></div>
+    <div class="col-sm-offset-2 center-block">
+        <div class="container white-center heidt heidt2">
+            <!--<div class="blue-block" th:fragment="profile-navbar">-->
+                <!--<a href="/userprofile/">Профиль</a>-->
+                <!--<a href="/userprofile/schedule/">Расписание</a>-->
+                <!--<a href="/userprofile/labs/">Дополнительные баллы</a>-->
+                <!--<a href="/userprofile/decan/">Контакты деканата</a>-->
+            <!--</div>-->
+            <div class="row scrl" style="height: 82vh;">
+                <div class="col-md-12"><h1>Личный кабинет</h1></div>
+                <div class="col-md-3">
+                    <img th:src="${user_info.avatar != null}? ${user_info.avatar} : 'http://www.zastavki.com/pictures/2560x1600/2010/Animals_Cats_Pussycat_on_a_blanket_023280_.jpg'"
+                         class="user-profile img-responsive">
+                </div>
+                <div class="col-md-4">
+                    <div class="row lala">
+                        <div class="col-md-12"><h4>Общее</h4></div>
+                        <div class="col-md-10">
+                            <ul class="ghj">
+                                <li class="spis">Имя: <b th:text="${user_info.name}"></b></li>
+                                <li class="spis">Фамилия: <b th:text="${user_info.lastName}"></b></li>
+                                <li class="spis">Отчество: <b th:text="${user_info.midName}"></b></li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+                <div class="row lala">
+                    <div class="col-md-4">
+                        <div class="col-md-12"><h4>Контакты</h4></div>
+                        <div class="col-md-10">
+                            <ul class="vbn">
+                                <li class="spis">Телефон: <b th:text="${user_info.phoneNumber}"></b></li>
+                                <li class="spis" style="word-wrap: break-word;">E-mail: <b
+                                        th:text="${user_info.email}"></b></li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-md-12">
+                    <p class="klop" style="font-size: 20px; margin-top: 15px;" th:text="'Ваш баланс ' + ${#numbers.formatDecimal(user_info.coins, 1, 2)} + ' баллов'"></p>
+                </div>
+                <div th:if="${userComp != null}">
+                    <p style="font-weight: bold; margin-left: 30px;">Уровень владения компетенциями:</p>
+                    <ul>
+                        <li th:each="comp : ${userComp}">
+                            <p th:text="${comp.competency.competencyName} + ' : ' + ${#numbers.formatDecimal(comp.competencyLevel, 1, 2)} + '%'"></p>
+                        </li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+    </div>
+    <!--<div class="col-md-12 header footer" th:include="index::main-footer"></div>-->
+</div>
+<div th:include="index::script-libs"></div>
+</body>
+</html>

@@ -1,0 +1,169 @@
+<!DOCTYPE html>
+<html lang="en" xmlns="http://www.w3.org/1999/xhtml" xmlns:th="http://www.thymeleaf.org"
+      xmlns:sec="http://www.w3.org/1999/xhtml">
+<head th:include="index::header"></head>
+<body>
+<div class="wrapper">
+    <nav class="navbar navbar-inverse" th:include="index::main-navbar"></nav>
+    <div class="side-menu" th:include="index::main-side-menu"></div>
+    <div class="col-sm-offset-2 center-block">
+        <div class="container white-center rty scrl">
+            <div class="row height-row lala">
+                <div class="col-md-12" style="margin-left: 10px;"><h1>Материалы</h1></div>
+                <div class="col-md-6" style="border-right: solid 2px #BCB9B9;">
+                    <div sec:authorize="hasAuthority('STUDENT')" class="col-xs-7">
+                        <div style="margin-bottom: 10px;">Курс:</div>
+                        <div class="xas"><input type="button" name="button" value="1"
+                                                class="btn btn-primary button-number crs"></div>
+                        <div class="xas"><input type="button" name="button" value="2"
+                                                class="btn btn-primary button-number crs"></div>
+                        <div class="xas"><input type="button" name="button" value="3"
+                                                class="btn btn-primary button-number crs"></div>
+                        <div class="xas"><input type="button" name="button" value="4"
+                                                class="btn btn-primary button-number crs"></div>
+                    </div>
+                    <div sec:authorize="hasAuthority('STUDENT')" class="col-xs-4">
+                        <div style="margin-bottom: 10px;">Семестр:</div>
+                        <div class="xas"><input type="button" name="button" value="1"
+                                                class="btn btn-primary button-number smstr"></div>
+                        <div class="xas"><input type="button" name="button" value="2"
+                                                class="btn btn-primary button-number smstr"></div>
+                    </div>
+                    <div class="col-xs-12" style="margin: 10px 0px 10px 0;">Список предметов</div>
+                    <div class="conts" style="overflow-y: scroll; height: 40vh;">
+                        <ul sec:authorize="hasAuthority('STUDENT')">
+                            <li class="spis"><input name="subj" type="radio" value="Информатика">Информатика</li>
+                            <li class="spis"><input name="subj" type="radio" value="Геометрия">Геометрия</li>
+                            <li class="spis"><input name="subj" type="radio" value="Дискретная математика">Дискретная
+                                математика
+                            </li>
+                            <li class="spis"><input name="subj" type="radio" value="Математический анализ">Математический
+                                анализ
+                            </li>
+                            <li class="spis"><input name="subj" type="radio" value="Алгоритмы">Алгоритмы</li>
+                            <li class="spis"><input name="subj" type="radio" value="Иностранный язык">Иностранный язык
+                            </li>
+                            <li class="spis"><input name="subj" type="radio" value="Русский язык">Русский язык</li>
+                            <li class="spis"><input name="subj" type="radio"
+                                                    value="Теория вероятности и математическая статистика">Теория
+                                вероятности и математическая статистика
+                            </li>
+                        </ul>
+
+                        <form sec:authorize="hasAnyAuthority('ADMIN', 'METHODIST', 'TEACHER', 'DECAN')" method="POST"
+                              enctype="multipart/form-data" action="/materials/upload">
+                            Файл который будет загружен: <input id="the-file" type="file" name="file">
+                            <br>
+                            <input id="the-filename" type="hidden" name="filename" path="filename">
+                            Предмет: <select path="subject" name="subject" required>
+                            <option name="subject" value="Информатика" selected>Информатика</option>
+                            <option name="subject" value="Иностранный язык">Иностранный язык</option>
+                            <option name="subject" value="Геометрия">Геометрия</option>
+                            <option name="subject" value="Дисктретная математика">Дисктретная математика</option>
+                            <option name="subject" value="Математический анализ">Математический анализ</option>
+                            <option name="subject" value="Алгоритмы">Алгоритмы</option>
+                            <option name="subject" value="Русский язык">Русский язык</option>
+                            <option name="subject" value="Теория вероятности и математическая статистика">Теория
+                                вероятности и математическая статистика
+                            </option>
+                        </select>
+                            <br>
+                            <br>
+                            Выберите курс: <select path="course" name="course">
+                            <option name="course" value="1" selected>1</option>
+                            <option name="course" value="2">2</option>
+                            <option name="course" value="3">3</option>
+                            <option name="course" value="4">4</option>
+                        </select>
+                            Выберите семестр: <select path="semester" name="semester">
+                            <option name="semester" value="1" selected>1</option>
+                            <option name="semester" value="2">2</option>
+                        </select>
+                            <br>
+                            <br>
+                            <input type="submit" value="Загрузить"> Загрузить файл
+
+                        </form>
+                    </div>
+                    <div sec:authorize="hasAuthority('STUDENT')" class="xas"><input type="button" name="button" id="ok"
+                                                                                    value="OK"
+                                                                                    class="btn btn-primary button-number"><label
+                            id="error"></label>
+                    </div>
+                </div>
+                <div class="col-md-6 ltl">
+                    <div class="col-md-12" style="margin: 0px 0px 20px 0;">Книги:</div>
+                    <div id="ready" class="conts" style="overflow-y: scroll; height: 50vh;">
+                        <ul sec:authorize="hasAnyAuthority('ADMIN', 'METHODIST', 'TEACHER', 'DECAN')" th:each="materials : ${materialsList}">
+                            <a th:href="@{/files/{filename}(filename=${materials.filename})}">
+                                <li class="spis" th:text="${materials.filename}"></li>
+                            </a>
+                        </ul>
+                    </div>
+                </div>
+                <p th:text="${error}"></p>
+            </div>
+        </div>
+    </div>
+    <!--<div class="col-md-12 header footer" th:include="index::main-footer"></div>-->
+</div>
+<div th:include="index::script-libs"></div>
+</body>
+<script>
+    $(document).ready(function () {
+        var course;
+        var semester;
+        var subject;
+        $('.crs').click(function () {
+            course = $(this).attr("value");
+        });
+        $('.smstr').click(function () {
+            semester = $(this).attr("value");
+        });
+        $(':radio').change(function () {
+            subject = $(this).val();
+        });
+        $('#ok').click(function () {
+            if (course == null || semester == null || subject == null) {
+                $("label#error").text("Вы должны выбрать курс семестр и предмет");
+            } else {
+                $("label#error").text("");
+                $.ajax({
+                    type: "GET",
+                    contentType: "application/json",
+                    url: "/api/materials",
+                    data: {
+                        course: course,
+                        semester: semester,
+                        subject: subject
+                    },
+                    success: function (data) {
+                        var materialsList = '' +
+                            '<ul>';
+                        $.each(data, function (index, value) {
+                            materialsList += '' +
+                                '<a href="/files/' + value.filename + '">' +
+                                '<li class="spis">' + value.filename + '</li>' +
+                                '</a>';
+                        });
+                        materialsList += '</ul>';
+                        $('#ready').html(materialsList);
+                    }
+                });
+            }
+        })
+    });
+
+    $('#the-file').on('change', function (e) {
+        var filename = $(this).val();
+        var lastIndex = filename.lastIndexOf('\\');
+        if (lastIndex < 0) {
+            lastIndex = filename.lastIndexOf('/');
+        }
+        if (lastIndex >= 0) {
+            filename = filename.substring(lastIndex + 1);
+        }
+        $('#the-filename').val(filename);
+    });
+</script>
+</html>

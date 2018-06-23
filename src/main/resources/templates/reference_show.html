@@ -1,0 +1,47 @@
+<!DOCTYPE html>
+<html lang="en" xmlns="http://www.w3.org/1999/xhtml" xmlns:th="http://www.thymeleaf.org"
+      xmlns:sec="http://www.w3.org/1999/xhtml">
+<head th:include="index::header"></head>
+<body>
+<div class="wrapper">
+    <nav class="navbar navbar-inverse" th:include="index::main-navbar"></nav>
+    <div class="side-menu" th:include="index::main-side-menu"></div>
+
+    <div class="col-sm-offset-2 center-block">
+        <div class="container white-center heidt">
+            <div class="row scrl" style="overflow-y: scroll; height: 80vh;">
+                <table class="table_blur" style="margin-bottom: 10px;">
+                    <tr>
+                        <th>Количество справок</th>
+                        <th>Тип справки</th>
+                        <th>ФИО</th>
+                        <th>Группа</th>
+                        <th>Статус справки</th>
+                    </tr>
+                    <tr th:each="refr, stat : ${refs}">
+                        <td th:text="${refr.count}"></td>
+                        <td th:text="${refr.type.name}"></td>
+                        <td th:text="${refr.user.name} + ' ' + ${refr.user.lastName} + ' ' + ${refr.user.midName}"></td>
+                        <td th:text="${refr.user.group == ''}? 'Преподаватель' : ${refr.user.group}"></td>
+                        <td>
+                            <form sec:authorize="hasAnyAuthority('DECAN', 'ADMIN', 'METHODIST')"
+                                  th:action="@{/action/decan/ref_show/}" method="post">
+                                <div class="form-group">
+                                    <input type="hidden" name="ref_id" th:value="${refr.getId()}">
+                                    <button type="submit" class="btn btn-default">Готова</button>
+                                </div>
+                            </form>
+                            <p sec:authorize="hasAnyAuthority('STUDENT', 'TEACHER')"
+                               th:text="${refr.status}? 'Готово' : 'Не готово'"></p>
+                        </td>
+                    </tr>
+                </table>
+            </div>
+        </div>
+    </div>
+
+    <div class="col-md-12 header footer" th:include="index::main-footer"></div>
+</div>
+<div th:include="index::script-libs"></div>
+</body>
+</html>

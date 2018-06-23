@@ -1,0 +1,11 @@
+<!DOCTYPE html>
+<html lang="en" xmlns="http://www.w3.org/1999/xhtml" xmlns:th="http://www.thymeleaf.org">
+<head></head>
+<body>
+<h1>Новое сообщение из формы поддержки!</h1>
+<h2 th:text="'Оповещение от ' + ${from}"></h2>
+<span th:text="'Тема: ' + ${subject} + ';'"></span>
+<p th:text="${message}"></p>
+<p>Это сообщение отправлено автоматически из формы обратной связи.</p>
+</body>
+</html>

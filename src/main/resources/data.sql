@@ -1,0 +1,45 @@
+SELECT * FROM groups;
+-- INSERT INTO "roles" VALUES
+--   (1, 'ADMIN'),
+--   (2, 'SPECIALIST'),
+--   (3, 'DECANAT'),
+--   (4, 'STUDENT');
+-- -- --
+-- INSERT INTO "users" (id, active, email, last_name, mid_name, name, password, phone_number, avatar, position, is_student,
+--                      coins)
+-- VALUES
+--   (1, 1, 'admin@admin.ru', 'Admin', 'Main', 'Admin', crypt('admin', gen_salt('bf') :: VARCHAR(255)) :: VARCHAR(255),
+--       '+79050399574', NULL, 'position', FALSE, 0),
+--   (2, 1, 'ak@it.kfu.ru', 'Хасьянов', 'Фаридович', 'Айрат',
+--       crypt('admin', gen_salt('bf') :: VARCHAR(255)) :: VARCHAR(255),
+--       '(843) 221-34-33 (доб. 25)', '/image/decan/1.jpg', 'Директор Высшей школы ИТИС', FALSE, 0),
+--   (3, 1, 'Irina.Maksimova@kpfu.ru', 'Максимова', 'Александровна', 'Ирина',
+--       crypt('admin', gen_salt('bf') :: VARCHAR(255)) :: VARCHAR(255),
+--       '(843) 221-34-33 (доб.12)', '/image/decan/2.jpg', 'Заместитель директора по развитию', FALSE, 0),
+--   (4, 1, 'Marat.Nasrutdinov@kpfu.ru', 'Насрутдинов', 'Фаритович', 'Марат',
+--       crypt('admin', gen_salt('bf') :: VARCHAR(255)) :: VARCHAR(255),
+--       '(843) 221-34-33 (доб.13)', '/image/decan/3.jpg', 'Заместитель директора по учебной работе', FALSE, 0),
+--   (5, 1, 'MOTalanov@kpfu.ru', 'Таланов', 'Олегович', 'Максим',
+--       crypt('admin', gen_salt('bf') :: VARCHAR(255)) :: VARCHAR(255),
+--       '(843) 221-34-33', '/image/decan/4.jpg', 'Заместитель директора по научной работе', FALSE, 0),
+--   (6, 1, 'ab@it.kfu.ru', 'Бакирова', 'Наримовна', 'Айсылу',
+--       crypt('admin', gen_salt('bf') :: VARCHAR(255)) :: VARCHAR(255),
+--       '(843) 221-34-33 (доб.14)', '/image/decan/5.jpg',
+--       'Заместитель директора по социальной и воспитательной работе', FALSE, 0),
+--   (7, 1, 'Ruslan.Gaisin@kpfu.ru', 'Гайсин', 'Ринадович', 'Руслан',
+--       crypt('admin', gen_salt('bf') :: VARCHAR(255)) :: VARCHAR(255),
+--       '(843) 221-34-33 (доб.21)', '/image/decan/6.jpg', 'Заместитель директора по трансферу технологий', FALSE, 0),
+--   (8, 1, 'stud@stud.ru', 'Тест', 'Тестович', 'Студент',
+--       crypt('admin', gen_salt('bf') :: VARCHAR(255)) :: VARCHAR(255), '+79050399574', NULL, NULL, FALSE, 0),
+--   (9, 1, 'metod@metod.ru', 'Методист', 'Методсит', 'Метод',
+--       crypt('admin', gen_salt('bf') :: VARCHAR(255)) :: VARCHAR(255), '+79050399574', NULL, NULL, FALSE, 0);
+-- -- --
+-- INSERT INTO "user_role" VALUES (1, 1);
+-- INSERT INTO "user_role" VALUES (2, 3);
+-- INSERT INTO "user_role" VALUES (3, 3);
+-- INSERT INTO "user_role" VALUES (4, 3);
+-- INSERT INTO "user_role" VALUES (5, 3);
+-- INSERT INTO "user_role" VALUES (6, 3);
+-- INSERT INTO "user_role" VALUES (7, 3);
+-- INSERT INTO "user_role" VALUES (8, 4);
+-- INSERT INTO "user_role" VALUES (9, 2);

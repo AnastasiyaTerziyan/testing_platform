@@ -1,0 +1,48 @@
+<!DOCTYPE html>
+<html lang="en" xmlns="http://www.w3.org/1999/xhtml" xmlns:th="http://www.thymeleaf.org">
+<head th:include="index::header"></head>
+<body>
+<div class="wrapper">
+
+    <nav class="navbar navbar-inverse" th:include="index::main-navbar"></nav>
+    <div class="side-menu" th:include="index::main-side-menu"></div>
+    <div class="col-sm-offset-2 center-block">
+        <div class="container white-center scrl">
+            <div class="row height-row">
+                <div class="col-md-12">
+                    <h1>Тестовые задания</h1>
+                </div>
+                <div class="col-md-12">
+                    <div th:each="test, stat : ${tests}">
+                        <br><br><h4>Название теста:</h4><b style="font-style: italic; font-size: medium; text-transform: uppercase" th:text="${test.testName}"></b>
+                        <br><p style="margin-top: 10px">Категория теста:</p><b style="font-style: italic; font-size: medium;" th:text="${test.testCategory}"></b>
+                        <form th:if="${questions == null}" th:action="@{/game/test/}" th:method="get">
+                            <input type="hidden" th:value="${test.id}" id="testId" name="testId">
+                            <br><input type="submit" value="Выбрать" class="addQuestion btn btn-default btn-go">
+                        </form>
+                    </div>
+                </div>
+                <div th:if="${questions != null}" class="col-md-12" style="margin-top: 20px">
+                    <form th:object="${testAnswer}" th:action="@{/game/answer/}" th:method="get">
+                        <div th:each="question, stats : ${questions}">
+                            <b style="font-size: medium" th:text="${question.questionText}"></b>
+                            <ol th:if="${question.questionVariants != null}">
+                                <li th:each="variant : ${question.questionVariants}"
+                                    th:text="${variant}">
+                                    <!--<input type="checkbox" th:field="*{userAnswer}"/>-->
+                                </li>
+                            </ol>
+                            <label for="answerText">Введите ваш ответ </label>
+                            <input id="answerText" th:field="*{answers[__${stats.index}__].answerText}" type="text"/>
+                            <input id="questionId" type="hidden" th:name="|answers[${stats.index}].questionId|" th:attr="value = ${question.id}">
+                        </div>
+                        <input type="submit" value="Отправить" class="addQuestion btn btn-default btn-go"/>
+                    </form>
+                </div>
+            </div>
+        </div>
+        <!--<div class="col-md-12 header footer" th:include="index::main-footer"></div>-->
+    </div><!-- wrapper close -->
+    <div th:include="index::script-libs"></div>
+</body>
+</html>

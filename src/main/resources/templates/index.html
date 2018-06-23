@@ -1,0 +1,231 @@
+<!DOCTYPE html>
+<html lang="en" xmlns="http://www.w3.org/1999/xhtml" xmlns:th="http://www.thymeleaf.org"
+      xmlns:sec="http://www.w3.org/1999/xhtml">
+<head th:fragment="header">
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title th:text="${title}"></title>
+    <link rel="stylesheet" href="/libs/bootstrap/css/bootstrap.min.css">
+    <link rel="stylesheet" href="//code.jquery.com/ui/1.12.1/themes/smoothness/jquery-ui.css">
+    <link rel="stylesheet" href="/css/style.css">
+</head>
+<body>
+<div class="wrapper">
+    <nav class="navbar navbar-inverse" th:fragment="main-navbar">
+        <div class="container-fluid">
+            <div class="navbar-header">
+                <button type="button" class="navbar-toggle" data-toggle="collapse" data-target="#myNavbar">
+                    <span class="icon-bar"></span>
+                    <span class="icon-bar"></span>
+                    <span class="icon-bar"></span>
+                </button>
+                <ul class="nav navbar-nav lang nones">
+                    <li sec:authorize="isAuthenticated()"><a href="#" data-toggle="modal" id="modal-sms"><img
+                            src="/image/icon/sms.png"
+                            class="sms"></a></li>
+                    <li><a href="/">
+                        <p class="menu-p">Главная</p></a></li>
+                    <li sec:authorize="isAuthenticated()"><a href="/userprofile/">
+                        <p class="menu-p">Личный кабинет</p></a></li>
+                    <li sec:authorize="hasAnyAuthority('ADMIN', 'STUDENT')"><a href="/game/">
+                        <p class="menu-p">Тестирование</p></a></li>
+                    <li sec:authorize="hasAnyAuthority('ADMIN', 'SPECIALIST')"><a href="/tasks/create/">
+                        <p class="menu-p">Создание заданий</p></a></li>
+                    <li sec:authorize="isAuthenticated()"><a href="/game/polls/">
+                        <p class="menu-p">Дополнительная информация</p></a></li>
+                    <li sec:authorize="isAuthenticated()"><a href="/game/score/">
+                        <p class="menu-p">Дополнительные баллы</p></a></li>
+
+
+                    <!-- Modal -->
+                    <div sec:authorize="isAuthenticated()" id="myModal2" class="modal fade" role="dialog">
+                        <div class="modal-dialog">
+
+                            <!-- Modal content-->
+                            <div class="modal-content" style="color: black; width: 620px;">
+                                <div class="modal-header">
+                                    <div class="ui-widget">
+                                        <input id="search" placeholder="Поиск" class="xas">
+                                    </div>
+                                    <b style="margin-left: 20px;" class="xas" id="chat-user-info"></b>
+                                    <button type="button" class="close" data-dismiss="modal">&times;</button>
+                                </div>
+                                <div class="row" style="min-height: 400px;">
+                                    <div class="col-xs-4 gast" id="conversations"
+                                         style="min-height: 500px; overflow-y: scroll;">
+
+                                    </div>
+                                    <div class="col-xs-7 less" style="min-height: 400px;">
+                                        <div class="rets" id="messages"
+                                             style="min-height: 400px;    padding-top: 10px;">
+                                            <div class="media">
+                                                <br><br><br><br>
+                                                <br><br><br><br>
+                                                <p class="text-center">Пожалуйста выберите диалог..</p>
+                                            </div>
+                                        </div>
+                                        <div class="row" id="send-msg-form" style="display: none;">
+                                            <div class="col-xs-12">
+                                                <div class="row">
+                                                    <div class="col-xs-12 sert"></div>
+                                                    <div class="col-xs-9"><p>
+                                                        <textarea class="form-control" rows="1" id="message-input"
+                                                                  placeholder="Введите сообщение"></textarea>
+                                                    </p>
+                                                    </div>
+                                                    <div class="col-xs-3 med">
+                                                        <button type="button" class="btn btn-default" id="send-message">
+                                                            Отправить
+                                                        </button>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="modal-footer">
+                                </div>
+                            </div>
+
+                        </div>
+                    </div>
+                </ul>
+            </div>
+            <div class="collapse navbar-collapse header" id="myNavbar">
+                <ul sec:authorize="isAuthenticated()" class="nav navbar-nav lang none">
+                    <li><a href="#"><img src="/image/icon/sms.png" class="sms"><span class="badge">7</span></a></li>
+                    </li>
+                </ul>
+                <ul class="nav navbar-nav navbar-right">
+                    <br class="only-mobile">
+                    <li class="color-font"><a href="#">
+                        <img sec:authorize="isAuthenticated()"
+                             th:src="${user_info.avatar != null}? ${user_info.avatar} : 'http://www.zastavki.com/pictures/2560x1600/2010/Animals_Cats_Pussycat_on_a_blanket_023280_.jpg'"
+                             class="user img-responsive">
+                    </a></li>
+                    <li sec:authorize="!isAuthenticated()" class="lang"><a href="#" data-toggle="modal"
+                                                                           data-target="#loginModal">Вход</a></li>
+                    <li sec:authorize="!isAuthenticated()" class="lang"><a href="/registration">Регистрация</a></li>
+                    <li sec:authorize="isAuthenticated()" class="lang"><a href="/logout">Выход</a></li>
+                    <br class="only-mobile"><br class="only-mobile"><br class="only-mobile"><br class="only-mobile">
+                    <li class="only-mobile"><a href="/">
+                        <p class="menu-p">Главная</p></a></li>
+                    <br>
+                    <li sec:authorize="isAuthenticated()" class="only-mobile"><a href="/userprofile/">
+                        <p class="menu-p">Профиль</p></a></li>
+                    <br>
+                    <li sec:authorize="hasAnyAuthority('ADMIN', 'STUDENT')" class="only-mobile"><a href="/game/">
+                        <p class="menu-p">Тестирование</p></a></li>
+                    <br>
+                    <li sec:authorize="hasAnyAuthority('ADMIN', 'SPECIALIST')" class="only-mobile"><a
+                            href="/tasks/create/">
+                        <p class="menu-p">Создание заданий</p></a></li>
+                    <br>
+                    <li sec:authorize="isAuthenticated()" class="only-mobile"><a href="/materials/">
+                        <p class="menu-p">Материалы</p></a></li>
+                    <br>
+                    <!-- Modal -->
+                    <div sec:authorize="!isAuthenticated()" id="loginModal" class="modal fade" role="dialog">
+                        <div class="modal-dialog">
+
+                            <!-- Modal content-->
+                            <div class="modal-content fast">
+                                <form class="form-style" th:action="@{/login}" th:method="post" method="post">
+                                    <div class="modal-header">
+                                        <button type="button" class="close" data-dismiss="modal">&times;</button>
+                                        <h4 class="modal-title">Вход</h4>
+                                    </div>
+                                    <div class="modal-body">
+                                        Логин<br>
+                                        <input type="text" name="email" style="margin-bottom: 10px;" class="mnb"><br>
+                                        Пароль<br>
+                                        <input type="password" name="password" class="mnb"><br>
+                                        <div align="center" th:if="${param.error}">
+                                            <p style="font-size: 20px; color: #FF1C19;">Проверьте email и пароль</p>
+                                        </div>
+
+                                    </div>
+                                    <div class="modal-footer">
+                                        <button class="button-news btn-primary save mnb" type="submit">
+                                            Войти
+                                        </button>
+                                    </div>
+                                </form>
+                            </div>
+
+                        </div>
+                    </div>
+                </ul>
+            </div>
+        </div>
+    </nav>
+    <div class="col-sm-12 center-block">
+        <div class="container white-center scrl">
+            <h1 style="font-style: italic">Добро пожаловать!</h1>
+            <center><iframe style="text-align: center" width="660" height="415" src="https://www.youtube.com/embed/atIwagMBDi4"
+                            frameborder="0" allow="autoplay; encrypted-media" allowfullscreen></iframe></center>
+        </div>
+    </div>
+</div>
+<!--<div class="col-md-12 header footer" th:fragment="main-footer">
+    <div class="xas">Интерактивная платформа Высшей школы ИТИС</div>
+    <div style="float: right;">2018</div>
+</div>-->
+</div> <!-- wrapper close -->
+<div th:fragment="script-libs">
+    <div class='notifications top-left'>
+    </div>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.4/jquery.min.js"></script>
+    <script
+            src="https://code.jquery.com/ui/1.12.1/jquery-ui.min.js"
+            integrity="sha256-VazP97ZCwtekAsvgPBSUwPFKdrwD3unUfSGVYrahUqU="
+            crossorigin="anonymous"></script>
+    <script src="/libs/bootstrap/js/bootstrap.min.js"></script>
+    <script src="/js/sockjs.js"></script>
+    <script src="/js/stomp.js"></script>
+    <script src="/js/chat.js"></script>
+    <script src="/js/not.js"></script>
+    <script src="/js/moment.js"></script>
+    <script src="/js/autosize.js"></script>
+    <style>
+        .ui-autocomplete {
+            z-index: 9999 !important;
+        }
+
+        #search {
+            position: relative;
+            z-index: 10000;
+        }
+    </style>
+    <script>
+
+        $(document).ready(function () {
+            autosize($('#message-input'));
+            moment.locale('ru');
+            getInfoUser();
+            $("#search").autocomplete({
+                source: "/search_user",
+                minLength: 2,
+                select: function (event, ui) {
+                    searchConvByUserEmail(ui.item.user);
+                }
+            });
+            if (window.location.href.indexOf('#loginModal') != -1) {
+                $('#loginModal').modal('show');
+            }
+            $('.send-msg-decan').on('click', function () {
+                var decanEmail = $(this).attr('data-decan-email');
+                $('#modal-sms').click();
+                setTimeout(function () {
+                    $.get("/search_user?term=" + decanEmail, function (data) {
+                        searchConvByUserEmail(data[0].user);
+                    });
+                }, 1000);
+
+            });
+        });
+    </script>
+
+</div>
+</body>
+</html>

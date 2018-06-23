@@ -1,0 +1,56 @@
+<!DOCTYPE html>
+<html lang="en" xmlns="http://www.w3.org/1999/xhtml" xmlns:th="http://www.thymeleaf.org">
+<head th:include="index::header"></head>
+<body>
+<div class="wrapper">
+
+    <nav class="navbar navbar-inverse" th:include="index::main-navbar"></nav>
+    <div class="side-menu" th:include="index::main-side-menu"></div>
+    <div class="col-sm-offset-2 center-block">
+        <div class="container white-center scrl">
+            <div class="row height-row">
+                <div class="col-md-12">
+                    <h1>Создание заданий</h1>
+                </div>
+                <div class="col-md-12">
+                    <form th:action="@{/tasks/create/}" method="post">
+                        <select class="form-control" id="testCategory" name="testCategory">
+                            <option th:value="*{T(ru.itis.terziyan.diplom.entities.enums.TestCategory).PROFESSIONAL}">
+                                Профессиональные компетенции
+                            </option>
+                            <option th:value="*{T(ru.itis.terziyan.diplom.entities.enums.TestCategory).CURRENT}">
+                                Существующие компетенции
+                            </option>
+                            <option th:value="*{T(ru.itis.terziyan.diplom.entities.enums.TestCategory).PSYCHOLOGICAL}">
+                                Психологические компетенции
+                            </option>
+                        </select>
+                        <br/>
+                        <select class="form-control" id="testComp" name="testComp">
+                            <option th:each="comp : ${comps}" th:value="${comp}" th:text="${comp}">
+                            </option>
+                        </select>
+                        <br/>
+                        <input type="text" class="form-control" id="testName"
+                               name="testName"
+                               placeholder="Введите название теста"/>
+                        <br/>
+                        <h4 style="font-weight: bold;" id="oldQuestionsHead">Вывод созданных вопросов</h4>
+                        <div id="oldTestQuestions"></div>
+                        <h4 style="font-weight: bold;" id="questionsHead">Добавление новых вопросов</h4>
+                        <div id="testQuestions"></div>
+
+                        <br/>
+                        <input type="button" value="Добавить вопрос" id="0" style="margin-bottom: 15px;" class="addQuestion btn btn-default btn-go"/>
+                    </form>
+
+                </div>
+            </div>
+        </div>
+    </div>
+    <!--<div class="col-md-12 header footer" th:include="index::main-footer"></div>-->
+</div><!-- wrapper close -->
+<div th:include="index::script-libs"></div>
+<script src="/js/createTask.js"></script>
+</body>
+</html>

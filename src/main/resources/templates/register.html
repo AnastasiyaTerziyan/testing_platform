@@ -1,0 +1,91 @@
+<!DOCTYPE html>
+<html lang="en" xmlns="http://www.w3.org/1999/xhtml" xmlns:th="http://www.thymeleaf.org"
+>
+<head th:include="index::header"></head>
+<body>
+<div class="wrapper">
+    <nav class="navbar navbar-inverse" th:include="index::main-navbar"></nav>
+    <div class="side-menu" th:include="index::main-side-menu"></div>
+    <div class="col-sm-offset-2 center-block">
+        <div class="container white-center scrl">
+            <div class="row">
+                <form th:action="@{/registration}" method="post" th:method="post"
+                      th:object="${user}">
+                    <h2 style="text-align: center;">Регистрация нового пользователя</h2>
+                    <div class="form-group">
+                        <label for="lastname">Фамилия:</label>
+                        <input th:field="*{lastName}" type="text" class="form-control" id="lastname">
+                        <label th:if="${#fields.hasErrors('lastName')}" th:errors="*{lastName}"
+                               class="validation-message"></label>
+                    </div>
+                    <div class="form-group">
+                        <label for="name">Имя:</label>
+                        <input th:field="*{name}" type="text" class="form-control" id="name">
+                        <label th:if="${#fields.hasErrors('name')}" th:errors="*{name}"
+                               class="validation-message"></label>
+                    </div>
+                    <div class="form-group">
+                        <label for="middlename">Отчество:</label>
+                        <input th:field="*{midName}" type="text" class="form-control" id="middlename">
+                        <label th:if="${#fields.hasErrors('midName')}" th:errors="*{midName}"
+                               class="validation-message"></label>
+                    </div>
+                    <div class="form-group">
+                        <label for="tel">Номер телефона:</label>
+                        <input th:field="*{phoneNumber}" type="tel" class="form-control" id="tel">
+                        <label th:if="${#fields.hasErrors('phoneNumber')}" th:errors="*{phoneNumber}"
+                               class="validation-message"></label>
+                    </div>
+                    <div class="form-group">
+                        <label for="email">Email:</label>
+                        <input th:field="*{email}" type="email" class="form-control" id="email">
+                        <label
+                                th:if="${#fields.hasErrors('email')}" th:errors="*{email}"
+                                class="validation-message"></label>
+                    </div>
+                    <div class="form-group">
+                        <label for="pwd">Пароль:</label>
+                        <input th:field="*{password}" type="password" class="form-control" id="pwd">
+                        <label
+                                th:if="${#fields.hasErrors('password')}" th:errors="*{password}"
+                                class="validation-message"></label>
+                    </div>
+                    <div class="form-group">
+                        <label for="pwd">Подтверждение пароля:</label>
+                        <input th:field="*{passwordConfirm}" type="password" class="form-control" id="pwdConf">
+                        <label
+                                th:if="${#fields.hasErrors('confirmMessage')}" th:errors="*{confirmMessage}"
+                                class="validation-message"></label>
+                    </div>
+
+                    <div class="form-group">
+                        <button type="submit" class="btn btn-default">Зарегистрировать</button>
+                        <p class="success-message" th:utext="${successMessage}"></p>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+    <div class="col-md-12 header footer" th:include="index::main-footer"></div>
+</div>
+<div th:include="index::script-libs"></div>
+<script src="/js/jquery.maskedinput.min.js/" type="text/javascript"></script>
+<script>
+    var $checks1 = $("#checks").find('input[value="STUDENT"]').click(function () {
+        $checks2.prop('disabled', $checks1.is(':checked'));
+        if ($checks1.is(':checked')) {
+            $(".grps").show();
+        }
+    });
+    var $checks2 = $("#checks").find('input[value="METHODIST"], input[value="DECAN"], input[value="TEACHER"], input[value="ADMIN"]').click(function () {
+        $checks1.prop('disabled', $checks2.is(':checked'));
+        if ($checks2.is(':checked')) {
+            $(".grps").hide();
+        }
+    });
+    jQuery(function ($) {
+        $("#tel").mask("+7(999) 999-9999");
+    });
+</script>
+</body>
+</html>

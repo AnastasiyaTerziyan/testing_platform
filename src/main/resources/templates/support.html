@@ -1,0 +1,76 @@
+<!DOCTYPE html>
+<html lang="en" xmlns="http://www.w3.org/1999/xhtml" xmlns:th="http://www.thymeleaf.org"
+>
+<head th:include="index::header"></head>
+<body>
+<div class="wrapper">
+    <nav class="navbar navbar-inverse" th:include="index::main-navbar"></nav>
+    <div class="side-menu" th:include="index::main-side-menu"></div>
+
+    <div class="col-sm-offset-2 center-block">
+        <div class="container white-center scrl">
+            <div class="row height-row">
+                <div class="col-md-12"><h1>Поддержка</h1></div>
+                <div class="col-md-6">
+                    <form th:action="@{/action/support/}" method="post">
+                        <h4>Ваше предложение:</h4>
+                        <p><input name="subj" type="text" id="subj" placeholder="Тема обращения"></p>
+                        <p><textarea name="comment" class="rewas" id="message"></textarea></p>
+                        <div class="col-md-12" style="margin-bottom: 30px;">
+                            <button name="button"
+                                    class="button-news btn-primary save">Отправить
+                            </button>
+                        </div>
+                    </form>
+                </div>
+                <div class="col-md-6">
+                    <h4>Информация о сайте</h4>
+                    <p>Каждый веб-разработчик знает, что такое текст-«рыба». Текст этот, несмотря на название, не имеет
+                        никакого отношения к обитателям водоемов.
+                        Используется он веб-дизайнерами для вставки на интернет-страницы и демонстрации внешнего вида
+                        контента, просмотра шрифтов, абзацев, отступов и т.д.
+                        Так как цель применения такого текста исключительно демонстрационная, то и смысловую нагрузку
+                        ему нести совсем необязательно. Более того, нечитабельность
+                        текста сыграет на руку при оценке качества восприятия макета.</p>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="col-md-12 header footer" th:include="index::main-footer"></div>
+</div>
+<div th:include="index::script-libs"></div>
+<script>
+    $(document).ready(function () {
+
+        $("button").click(function (event) {
+            //stop submit the form, we will post it manually.
+            event.preventDefault();
+            sendMail();
+
+        });
+
+    });
+
+    function sendMail() {
+        var subj = $("#subj").val();
+        var message = $("#message").val();
+
+        $.ajax({
+            type: "POST",
+            contentType: "application/x-www-form-urlencoded",
+            url: "/api/support",
+            data: {
+                subject: subj,
+                message: message
+            },
+            success: function (data) {
+                $(':input')
+                    .not(':button')
+                    .val('');
+                alert(data);
+            }
+        })
+    }
+</script>
+</body>
+</html>
